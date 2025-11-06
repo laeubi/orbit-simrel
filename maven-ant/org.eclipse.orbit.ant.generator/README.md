@@ -34,10 +34,32 @@ The results are consumed by the BND target here:
 
 https://github.com/eclipse-orbit/orbit-simrel/blob/e9b717363348e51663066a0437491f66e02b2fad/maven-bnd/tp/MavenBND.target#L1393-L1470
 
-The generator produces a list of jars into 
+## Generated Files
+
+The generator produces two files in the publish directory:
+
+1. **Bundle-ClassPath.properties** - List of jar files to include in the Bundle-ClassPath
 
 https://github.com/eclipse-orbit/orbit-simrel/blob/main/maven-ant/publish/Bundle-ClassPath.properties
 
-If those contents change, they should be copied here to ensure that nothing is missed should something be changed in this regard:
+If the Bundle-ClassPath contents change, they should be copied to the MavenBND.target to ensure that nothing is missed:
 
 https://github.com/eclipse-orbit/orbit-simrel/blob/e9b717363348e51663066a0437491f66e02b2fad/maven-bnd/tp/MavenBND.target#L1433-L1457
+
+2. **Import-Package.properties** - Generated Import-Package instructions with explicit package constraints
+
+The generator analyzes each ant plugin's Maven POM to:
+- Identify compile-scope dependencies (e.g., com.jcraft:jsch, junit:junit, org.apache.bcel:bcel)
+- Download dependency JARs from Maven Central
+- Extract package information from OSGi manifests or by scanning class files
+- Generate explicit Import-Package constraints for packages that ant plugins depend on
+
+This replaces the generic `Import-Package: *;resolution:=optional` with specific package imports like:
+```
+Import-Package: com.jcraft.jsch.*;resolution:=optional,\
+                junit.*;resolution:=optional,\
+                org.apache.bcel.*;resolution:=optional,\
+                ...
+```
+
+If the Import-Package contents change, they should be reviewed and copied to the MavenBND.target Import-Package instruction.
