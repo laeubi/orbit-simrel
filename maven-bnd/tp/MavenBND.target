@@ -1595,7 +1595,21 @@ Bundle-ClassPath:       lib/ant-antlr.jar,\
 Bundle-SymbolicName:    org.apache.ant
 Bundle-Version:         ${version}.v20240901-1000
 Eclipse-Wrapped-Bundle: org.apache.ant:ant:${mvnVersion}
-Import-Package:         *;resolution:=optional
+Import-Package:         com.jcraft.jsch.*;resolution:=optional,\
+                        junit.*;resolution:=optional,\
+                        org.apache.commons.net.*;resolution:=optional,\
+                        org.apache.commons.logging.*;resolution:=optional,\
+                        org.apache.bcel.*;resolution:=optional,\
+                        org.apache.bsf.*;resolution:=optional,\
+                        org.apache.log4j.*;resolution:=optional,\
+                        org.apache.oro.*;resolution:=optional,\
+                        org.apache.regexp.*;resolution:=optional,\
+                        org.apache.xml.resolver.*;resolution:=optional,\
+                        org.apache.xalan.*;resolution:=optional,\
+                        org.apache.xml.serializer.*;resolution:=optional,\
+                        jakarta.mail.*;resolution:=optional,\
+                        javax.mail.*;resolution:=optional,\
+                        *;resolution:=optional
 Export-Package:         !images,\
                         *;version="${version}"
 Eclipse-BundleShape:    dir
